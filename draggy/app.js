@@ -1,12 +1,37 @@
+
+
+
 $(function() {
   // Handler for .ready() called.
 
-  $("#canvas").append($('#container1'));
+ // $("#canvas").append($('#container1').clone());
+
+ var json = "{
+  \"Person\": {
+    \"0\" : \"FirstName\",
+    \"1\" : \"LastName\",
+    \"2\" : \"Gender\",
+    \"3\": \"DateOfBirth\"
+  },
+  \"Address\": {
+    \"0\": \"Line1\",
+    \"1\": \"Line2\",
+    \"2\": \"City\",
+    \"3\": \"State\",
+    \"4\": \"Zip\"
+  }
+}"
+
+
 });
 
 
 
+function jsonToTable(json) {
+    
 
+            // The function returns the product of p1 and p2
+}
 
 
 
