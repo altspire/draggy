@@ -6,30 +6,22 @@ $(function() {
 
  // $("#canvas").append($('#container1').clone());
 
- var json = "{
-  \"Person\": {
-    \"0\" : \"FirstName\",
-    \"1\" : \"LastName\",
-    \"2\" : \"Gender\",
-    \"3\": \"DateOfBirth\"
-  },
-  \"Address\": {
-    \"0\": \"Line1\",
-    \"1\": \"Line2\",
-    \"2\": \"City\",
-    \"3\": \"State\",
-    \"4\": \"Zip\"
-  }
-}"
-
+ var jsonModel = '{"Person":{"0":"FirstName","1":"LastName","2":"Gender","3":"DateOfBirth"},"Address":{"0":"Line1","1":"Line2","2":"City","3":"State","4":"Zip"}}';
+ jsonToTable(jsonModel);
 
 });
 
 
 
-function jsonToTable(json) {
-    
+function jsonToTable(jsonModel) {
+    var obj = JSON.parse(jsonModel);
 
+    jQuery.each(obj, function(i, val) {
+      console.log(i);
+      jQuery.each(val, function(i, val) {
+        console.log(i + " " + val);
+      });
+    });
             // The function returns the product of p1 and p2
 }
 
