@@ -1,4 +1,5 @@
 
+var jsonModel = '{"Person":{"0":"FirstName","1":"LastName","2":"Gender","3":"DateOfBirth"},"Address":{"0":"Line1","1":"Line2","2":"City","3":"State","4":"Zip"}}';
 
 
 $(function() {
@@ -6,7 +7,6 @@ $(function() {
 
  // $("#source-canvas").append($('#container1').clone());
 
- var jsonModel = '{"Person":{"0":"FirstName","1":"LastName","2":"Gender","3":"DateOfBirth"},"Address":{"0":"Line1","1":"Line2","2":"City","3":"State","4":"Zip"}}';
  jsonToTable(jsonModel);
 
 
@@ -54,10 +54,7 @@ function createMappings(jsPlumbInstance, jsonModel) {
 
     jQuery.each(obj, function(tableName, columns) {
 
-      jsPlumbInstance.addGroup({
-          el: $('#' + tableName + '-' + 'table'),
-          id: tableName + '-' + 'jsplumb-group'
-      });  //(the default is to revert)
+      jsPlumbInstance.draggable(tableName + '-' + 'table', { containment: true});  //(the default is to revert)
 
       jQuery.each(columns, function(i, column) {
         jsPlumbInstance.addEndpoint(column + '-' + 'column', { 
@@ -69,8 +66,6 @@ function createMappings(jsPlumbInstance, jsonModel) {
 }
 
 jsPlumb.ready(function () {
-
-    var jsonModel = '{"Person":{"0":"FirstName","1":"LastName","2":"Gender","3":"DateOfBirth"},"Address":{"0":"Line1","1":"Line2","2":"City","3":"State","4":"Zip"}}';
 
     var j = jsPlumb.getInstance({Container:surface});
     createMappings(j, jsonModel);
