@@ -4,10 +4,11 @@
 $(function() {
   // Handler for .ready() called.
 
- // $("#canvas").append($('#container1').clone());
+ // $("#source-canvas").append($('#container1').clone());
 
  var jsonModel = '{"Person":{"0":"FirstName","1":"LastName","2":"Gender","3":"DateOfBirth"},"Address":{"0":"Line1","1":"Line2","2":"City","3":"State","4":"Zip"}}';
  jsonToTable(jsonModel);
+
 
 });
 
@@ -15,21 +16,73 @@ $(function() {
 
 function jsonToTable(jsonModel) {
     var obj = JSON.parse(jsonModel);
+    var topCounter = 50;
 
-    jQuery.each(obj, function(i, val) {
-      console.log(i);
-      jQuery.each(val, function(i, val) {
-        console.log(i + " " + val);
+    jQuery.each(obj, function(tableName, columns) {
+      var tableDiv = $('<div />', { "class": 'table', 'id': tableName + '-' + 'table'});
+      var titleDiv = $('<div />', { "class": 'title'});
+      var delDiv = $('<div />', { "class": 'del'});
+      var collapsDiv = $('<div />', { "class": 'node-collapse'});
+      $('#source-canvas').append(tableDiv);
+      
+      tableDiv.append(titleDiv);
+      tableDiv.append(delDiv);
+
+      jQuery.each(columns, function(i, column) {
+        var columnDiv = $('<div />', { "class": 'table-column', 'id': column + '-' + 'column', 'text': column});
+        tableDiv.append(columnDiv);
       });
+
+      tableDiv.css('top', topCounter +'px');
+      tableDiv.css('left', '20px');
+
+      tableDiv.append(collapsDiv);  
+
+      topCounter += 225;    
     });
-            // The function returns the product of p1 and p2
+
 }
 
+function createMappings(jsPlumbInstance, jsonModel) {
+    var obj = JSON.parse(jsonModel);
+    var exampleGreyEndpointOptions = {
+      endpoint:"Rectangle",
+      paintStyle:{ width:10, height:10, fill:'#666' },
+      isSource:true,
+      isTarget:true,
+      connectorStyle : { stroke:"#666" }
+    };
 
+    jQuery.each(obj, function(tableName, columns) {
+
+      jsPlumbInstance.addGroup({
+          el: $('#' + tableName + '-' + 'table'),
+          id: tableName + '-' + 'jsplumb-group'
+      });  //(the default is to revert)
+
+      jQuery.each(columns, function(i, column) {
+        jsPlumbInstance.addEndpoint(column + '-' + 'column', { 
+          anchor:"Right"
+        }, exampleGreyEndpointOptions); 
+      });
+    });
+
+}
 
 jsPlumb.ready(function () {
 
-    var j = window.j = jsPlumb.getInstance({Container:canvas});
+    var jsonModel = '{"Person":{"0":"FirstName","1":"LastName","2":"Gender","3":"DateOfBirth"},"Address":{"0":"Line1","1":"Line2","2":"City","3":"State","4":"Zip"}}';
+
+    var j1 = jsPlumb.getInstance({Container:"source-canvas"});
+    createMappings(j1, jsonModel);
+
+    var j = window.j = jsPlumb.getInstance({Container:"target-canvas"});
+
+
+    j1.addGroup({
+      el: $('#source-canvas'),
+      constrain:true
+    });
 
     // connect some before configuring group
 
