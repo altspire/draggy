@@ -49,7 +49,6 @@ function createMappings(jsPlumbInstance, jsonModel) {
       endpoint:"Rectangle",
       paintStyle:{ width:10, height:10, fill:'#666' },
       isSource:true,
-      isTarget:true,
       connectorStyle : { stroke:"#666" }
     };
 
@@ -73,44 +72,31 @@ jsPlumb.ready(function () {
 
     var jsonModel = '{"Person":{"0":"FirstName","1":"LastName","2":"Gender","3":"DateOfBirth"},"Address":{"0":"Line1","1":"Line2","2":"City","3":"State","4":"Zip"}}';
 
-    var j1 = jsPlumb.getInstance({Container:"source-canvas"});
-    createMappings(j1, jsonModel);
+    var j = jsPlumb.getInstance({Container:surface});
+    createMappings(j, jsonModel);
 
-    var j = window.j = jsPlumb.getInstance({Container:"target-canvas"});
-
-
-    j1.addGroup({
-      el: $('#source-canvas'),
-      constrain:true
+    j.draggable("container1", {
+      containment:true
     });
 
-    // connect some before configuring group
-
-    j.addGroup({
-        el:container1,
-        id:"one"
-    });  //(the default is to revert)
-
-    j.addGroup({
-        el:container2,
-        id:"two"
-    });  //(the default is to revert)
+    j.draggable("container2", {
+      containment:true
+    });
 
     var exampleGreyEndpointOptions = {
       endpoint:"Rectangle",
       paintStyle:{ width:10, height:10, fill:'#666' },
-      isSource:true,
       isTarget:true,
       connectorStyle : { stroke:"#666" }
     };
 
 
     j.addEndpoint("c1_1", { 
-      anchor:"Right"
+      anchor:"Left"
     }, exampleGreyEndpointOptions); 
 
     j.addEndpoint("c1_2", { 
-      anchor:"Right"
+      anchor:"Left"
     }, exampleGreyEndpointOptions); 
 
     j.addEndpoint("c2_1", { 
