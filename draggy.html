@@ -13,7 +13,7 @@
 
 	<body>
 		<div id="surface" class="container">
-		    <div class="row">
+		    <div class="row justify-content-between">
 			    <div id="source-canvas" class="canvas col-md-5">
 
 				</div>
@@ -21,6 +21,76 @@
 
 				</div>
 			</div>
+		  	<div class="row justify-content-between">
+		    	<textarea class="form-control" id="transform" rows="20">
+{
+    "models": [
+        {
+            "id": "patients",
+            "name": "Patients",
+            "columns": [
+                {
+                    "id": "pat_id"
+                },
+                {
+                    "id": "fn"
+                },
+                {
+                    "id": "ln"
+                },
+                {
+                    "id": "gender"
+                },
+                {
+                    "id": "dob"
+                }
+            ]
+        },
+        {
+            "id": "contactinfo",
+            "name": "ContactInfo",
+            "columns": [
+                {
+                    "id": "patient_id"
+                },
+                {
+                    "id": "line1"
+                },
+                {
+                    "id": "line2"
+                },
+                {
+                    "id": "city"
+                },
+                {
+                    "id": "state"
+                },
+                {
+                    "id": "zip"
+                },
+                {
+                    "id": "id"
+                }
+            ]
+        }
+    ],
+    "joins": [
+        {
+            "source": "patients.pat_id",
+            "target": "contactinfo.id",
+            "data": {
+                "type": "1:1"
+            }
+        }
+    ],
+    "groupby": [],
+    "where": []
+}
+
+
+
+		    	</textarea>
+		  	</div>
 		</div>
 		 <!-- Optional JavaScript -->
 	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
