@@ -139,42 +139,4 @@ function setupTargetPlumbing(jsPlumbInstance, jsonModel) {
 
 jsPlumb.ready(function () {
 
-/*
-    var j = jsPlumb.getInstance({Container:surface});
-    setupSourcePlumbing(j, SOURCE_MODEL_JSON);
-    setupTargetPlumbing(j, TARGET_MODEL_JSON);
-
-
-    j.draggable("container1", {
-      containment:true
-    });
-
-    j.draggable("container2", {
-      containment:true
-    });
-
-    var exampleGreyEndpointOptions = {
-      endpoint:"Rectangle",
-      paintStyle:{ width:10, height:10, fill:'#666' },
-      isTarget:true,
-      connectorStyle : { stroke:"#666" }
-    };
-
-
-    j.addEndpoint("c1_1", { 
-      anchor:"Left"
-    }, exampleGreyEndpointOptions); 
-
-    j.addEndpoint("c1_2", { 
-      anchor:"Left"
-    }, exampleGreyEndpointOptions); 
-
-    j.addEndpoint("c2_1", { 
-      anchor:"Left"
-    }, exampleGreyEndpointOptions); 
-
-    j.addEndpoint("c2_2", { 
-      anchor:"Left"
-    }, exampleGreyEndpointOptions); */
-
 });
