@@ -1,23 +1,41 @@
 
 var SOURCE_MODEL_JSON = null;
 var TARGET_MODEL_JSON = null;
+var j = null;
 
 
 $(function() {
   // Handler for .ready() called.
+  updateCanvasWithJSON();
 
+  $("#process-json").click(function(){
+    updateCanvasWithJSON();
+});
+
+});
+
+function updateCanvasWithJSON() {
+
+  if(j != null){
+    j.reset();
+  }
+
+  j = jsPlumb.getInstance({Container:surface});
   var transformJSON = JSON.parse($('#transform').val());
+
+  $('#source-canvas').empty();
+  $('#target-canvas').empty();
 
   SOURCE_MODEL_JSON = transformJSON.sourcemodels
   TARGET_MODEL_JSON = transformJSON.targetmodels
 
+  populateSourceCanvas(SOURCE_MODEL_JSON);
+  populateTargetCanvas(TARGET_MODEL_JSON);
 
- populateSourceCanvas(SOURCE_MODEL_JSON);
- populateTargetCanvas(TARGET_MODEL_JSON);
+  setupSourcePlumbing(j, SOURCE_MODEL_JSON);
+  setupTargetPlumbing(j, TARGET_MODEL_JSON);
 
-});
-
-
+}
 
 function populateSourceCanvas(jsonModel) {
     var obj = jsonModel
@@ -121,12 +139,13 @@ function setupTargetPlumbing(jsPlumbInstance, jsonModel) {
 
 jsPlumb.ready(function () {
 
+/*
     var j = jsPlumb.getInstance({Container:surface});
     setupSourcePlumbing(j, SOURCE_MODEL_JSON);
     setupTargetPlumbing(j, TARGET_MODEL_JSON);
 
 
-/*    j.draggable("container1", {
+    j.draggable("container1", {
       containment:true
     });
 
