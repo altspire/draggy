@@ -10,7 +10,13 @@ $(function() {
 
   $("#process-json").click(function(){
     updateCanvasWithJSON();
-});
+  });
+
+  $(window).resize(function() {
+    if(j != null){
+      j.repaintEverything();
+    }
+  });
 
 });
 
