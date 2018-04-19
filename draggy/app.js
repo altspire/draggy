@@ -1,6 +1,7 @@
 
 var SOURCE_MODEL_JSON = null;
 var TARGET_MODEL_JSON = null;
+var MAPPING_JSON = null;
 var j = null;
 
 
@@ -32,14 +33,16 @@ function updateCanvasWithJSON() {
   $('#source-canvas').empty();
   $('#target-canvas').empty();
 
-  SOURCE_MODEL_JSON = transformJSON.sourcemodels
-  TARGET_MODEL_JSON = transformJSON.targetmodels
+  SOURCE_MODEL_JSON = transformJSON.sourcemodels;
+  TARGET_MODEL_JSON = transformJSON.targetmodels;
+  MAPPING_JSON      = transformJSON.mappings;
 
   populateSourceCanvas(SOURCE_MODEL_JSON);
   populateTargetCanvas(TARGET_MODEL_JSON);
 
   setupSourcePlumbing(j, SOURCE_MODEL_JSON);
   setupTargetPlumbing(j, TARGET_MODEL_JSON);
+  setupMappings(j, MAPPING_JSON);
 
 }
 
@@ -48,7 +51,7 @@ function populateSourceCanvas(jsonModel) {
     var topCounter = 50;
 
     jQuery.each(obj, function(index, model) {
-          var tableDiv = $('<div />', { "class": 'table', 'id': model.name + '-' + 'table'});
+          var tableDiv = $('<div />', { "class": 'table', 'id': model.id + '-' + 'table'});
           var titleDiv = $('<div />', { "class": 'title'});
           var delDiv = $('<div />', { "class": 'del'});
           var collapsDiv = $('<div />', { "class": 'node-collapse'});
@@ -58,7 +61,7 @@ function populateSourceCanvas(jsonModel) {
           tableDiv.append(delDiv);
 
           jQuery.each(model.columns, function(index, column) {
-            var columnDiv = $('<div />', { "class": 'table-column', 'id': 'source-column' + '-' + column.id, 'text': column.id});
+            var columnDiv = $('<div />', { "class": 'table-column', 'id': model.id + '.' + column.id, 'text': column.id});
             tableDiv.append(columnDiv);
           });
 
@@ -76,7 +79,7 @@ function populateTargetCanvas(jsonModel) {
     var topCounter = 50;
 
     jQuery.each(obj, function(index, model) {
-          var tableDiv = $('<div />', { "class": 'table', 'id': model.name + '-' + 'table'});
+          var tableDiv = $('<div />', { "class": 'table', 'id': model.id + '-' + 'table'});
           var titleDiv = $('<div />', { "class": 'title'});
           var delDiv = $('<div />', { "class": 'del'});
           var collapsDiv = $('<div />', { "class": 'node-collapse'});
@@ -86,7 +89,7 @@ function populateTargetCanvas(jsonModel) {
           tableDiv.append(delDiv);
 
           jQuery.each(model.columns, function(index, column) {
-            var columnDiv = $('<div />', { "class": 'table-column', 'id': 'target-column' + '-' + column.id, 'text': column.id});
+            var columnDiv = $('<div />', { "class": 'table-column', 'id': model.id + '.' + column.id, 'text': column.id});
             tableDiv.append(columnDiv);
           });
 
@@ -110,11 +113,12 @@ function setupSourcePlumbing(jsPlumbInstance, jsonModel) {
 
     jQuery.each(obj, function(index, model) {
 
-      jsPlumbInstance.draggable(model.name + '-' + 'table', { containment: true});  //(the default is to revert)
+      jsPlumbInstance.draggable(model.id + '-' + 'table', { containment: true});  //(the default is to revert)
 
       jQuery.each(model.columns, function(index, column) {
-        jsPlumbInstance.addEndpoint('source-column' + '-' + column.id, { 
-          anchor:"Right"
+        jsPlumbInstance.addEndpoint(model.id + '.' + column.id, { 
+          anchor:"Right",
+          uuid: model.id + '.' + column.id
         }, exampleGreyEndpointOptions); 
       });
     });
@@ -132,15 +136,24 @@ function setupTargetPlumbing(jsPlumbInstance, jsonModel) {
 
     jQuery.each(obj, function(index, model) {
 
-      jsPlumbInstance.draggable(model.name + '-' + 'table', { containment: true});  //(the default is to revert)
+      jsPlumbInstance.draggable(model.id + '-' + 'table', { containment: true});  //(the default is to revert)
 
       jQuery.each(model.columns, function(index, column) {
-        jsPlumbInstance.addEndpoint('target-column' + '-' + column.id, { 
-          anchor:"Left"
+        jsPlumbInstance.addEndpoint(model.id + '.' + column.id, { 
+          anchor:"Left",
+          uuid: model.id + '.' + column.id
         }, exampleGreyEndpointOptions); 
       });
     });
 
+}
+
+function setupMappings(jsPlumbInstance, jsonModel){
+    var obj = jsonModel;
+
+    jQuery.each(obj, function(index, mapping) {
+      jsPlumbInstance.connect({uuids:[mapping.source, mapping.target]});
+    });        
 }
 
 jsPlumb.ready(function () {

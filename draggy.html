@@ -127,12 +127,22 @@
             ]
         }
     ],
+    "mappings": [
+        {
+            "source": "patients.pat_id",
+            "target": "patientdemographics.PatientID"
+        },
+        {
+            "source": "patients.fn",
+            "target": "patientdemographics.FirstName"
+        }
+    ],
     "joins": [
         {
             "source": "patients.pat_id",
             "target": "contactinfo.id",
             "data": {
-                "type": "1:1"
+                "type": "INNER"
             }
         }
     ],
