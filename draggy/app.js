@@ -102,7 +102,7 @@ function setupTargetPlumbing(jsPlumbInstance, jsonModel) {
     var exampleGreyEndpointOptions = {
       endpoint:"Rectangle",
       paintStyle:{ width:10, height:10, fill:'#666' },
-      isSource:true,
+      isTarget:true,
       connectorStyle : { stroke:"#666" }
     };
 
