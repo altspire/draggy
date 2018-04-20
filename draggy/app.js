@@ -2,7 +2,30 @@
 var SOURCE_MODEL_JSON = null;
 var TARGET_MODEL_JSON = null;
 var MAPPING_JSON = null;
+var JOIN_JSON = null;
 var j = null;
+
+var sourceEndpointOptions = {
+  endpoint:"Dot",
+  paintStyle:{ radius:6, fill:'#3E7E9C' },
+  isSource:true,
+  connectorStyle : { stroke:"#3E7E9C" }
+};
+
+var targetEndpointOptions = {
+  endpoint:"Dot",
+  paintStyle:{ radius:6, fill:'#3E7E9C' },
+  isTarget:true,
+  connectorStyle : { stroke:"#3E7E9C" }
+};
+
+var joinEndpointOptions = {
+  endpoint:"Rectangle",
+  paintStyle:{ width:10, height:10, fill:'#666' },
+  isSource:true,
+  isTarget:true,
+  connectorStyle : { stroke:"#666" }
+};
 
 
 $(function() {
@@ -36,6 +59,7 @@ function updateCanvasWithJSON() {
   SOURCE_MODEL_JSON = transformJSON.sourcemodels;
   TARGET_MODEL_JSON = transformJSON.targetmodels;
   MAPPING_JSON      = transformJSON.mappings;
+  JOIN_JSON         = transformJSON.joins;
 
   populateSourceCanvas(SOURCE_MODEL_JSON);
   populateTargetCanvas(TARGET_MODEL_JSON);
@@ -43,6 +67,7 @@ function updateCanvasWithJSON() {
   setupSourcePlumbing(j, SOURCE_MODEL_JSON);
   setupTargetPlumbing(j, TARGET_MODEL_JSON);
   setupMappings(j, MAPPING_JSON);
+  setupJoins(j, JOIN_JSON);
 
 }
 
@@ -104,22 +129,20 @@ function populateTargetCanvas(jsonModel) {
 
 function setupSourcePlumbing(jsPlumbInstance, jsonModel) {
     var obj = jsonModel;
-    var exampleGreyEndpointOptions = {
-      endpoint:"Rectangle",
-      paintStyle:{ width:10, height:10, fill:'#666' },
-      isSource:true,
-      connectorStyle : { stroke:"#666" }
-    };
 
     jQuery.each(obj, function(index, model) {
-
       jsPlumbInstance.draggable(model.id + '-' + 'table', { containment: true});  //(the default is to revert)
 
       jQuery.each(model.columns, function(index, column) {
         jsPlumbInstance.addEndpoint(model.id + '.' + column.id, { 
           anchor:"Right",
           uuid: model.id + '.' + column.id
-        }, exampleGreyEndpointOptions); 
+        }, sourceEndpointOptions); 
+
+        jsPlumbInstance.addEndpoint(model.id + '.' + column.id, { 
+          anchor:"Left",
+          uuid: 'join.' + model.id + '.' + column.id
+        }, joinEndpointOptions);
       });
     });
 
@@ -127,22 +150,15 @@ function setupSourcePlumbing(jsPlumbInstance, jsonModel) {
 
 function setupTargetPlumbing(jsPlumbInstance, jsonModel) {
     var obj = jsonModel;
-    var exampleGreyEndpointOptions = {
-      endpoint:"Rectangle",
-      paintStyle:{ width:10, height:10, fill:'#666' },
-      isTarget:true,
-      connectorStyle : { stroke:"#666" }
-    };
 
     jQuery.each(obj, function(index, model) {
-
       jsPlumbInstance.draggable(model.id + '-' + 'table', { containment: true});  //(the default is to revert)
 
       jQuery.each(model.columns, function(index, column) {
         jsPlumbInstance.addEndpoint(model.id + '.' + column.id, { 
           anchor:"Left",
           uuid: model.id + '.' + column.id
-        }, exampleGreyEndpointOptions); 
+        }, targetEndpointOptions); 
       });
     });
 
@@ -153,6 +169,17 @@ function setupMappings(jsPlumbInstance, jsonModel){
 
     jQuery.each(obj, function(index, mapping) {
       jsPlumbInstance.connect({uuids:[mapping.source, mapping.target]});
+    });        
+}
+
+function setupJoins(jsPlumbInstance, jsonModel){
+    var obj = jsonModel;
+
+    jQuery.each(obj, function(index, mapping) {
+      console.log(mapping.source);
+      console.log(mapping.target);
+
+      jsPlumbInstance.connect({uuids:['join.' + mapping.source, 'join.' + mapping.target]});
     });        
 }
 
