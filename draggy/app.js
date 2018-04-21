@@ -1,5 +1,6 @@
 
 var SOURCE_MODEL_JSON = null;
+var SOURCE_MODEL_COLUMNS = null;
 var TARGET_MODEL_JSON = null;
 var MAPPING_JSON = null;
 var JOIN_JSON = null;
@@ -42,7 +43,60 @@ $(function() {
     }
   });
 
+  initializeAutoComplete();
+
 });
+
+function initializeAutoComplete() {
+    var availableTags = [
+      "SELECT",
+      "FROM",
+      "WHERE",
+      "JOIN"
+    ];
+
+    availableTags = availableTags.concat(SOURCE_MODEL_COLUMNS);
+
+    function split( val ) {
+      return val.split( /[\s]+/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+ 
+    $( "#query-builder" )
+      // don't navigate away from the field on tab when selecting an item
+      .on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        autoFocus: true,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            availableTags, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( " " );
+          return false;
+        }
+      });
+  }
 
 function updateCanvasWithJSON() {
 
@@ -60,6 +114,9 @@ function updateCanvasWithJSON() {
   TARGET_MODEL_JSON = transformJSON.targetmodels;
   MAPPING_JSON      = transformJSON.mappings;
   JOIN_JSON         = transformJSON.joins;
+  SOURCE_MODEL_COLUMNS = getSourceColumns(SOURCE_MODEL_JSON);
+
+  jQuery.each()
 
   populateSourceCanvas(SOURCE_MODEL_JSON);
   populateTargetCanvas(TARGET_MODEL_JSON);
@@ -69,6 +126,18 @@ function updateCanvasWithJSON() {
   setupMappings(j, MAPPING_JSON);
   setupJoins(j, JOIN_JSON);
 
+}
+
+function getSourceColumns(jsonModel) {
+    var obj = jsonModel
+    var columnArray = [];
+
+    jQuery.each(obj, function(index, model) {
+          jQuery.each(model.columns, function(index, column) {
+            columnArray.push(model.id + '.' + column.id)
+          });
+    });
+    return columnArray;   
 }
 
 function populateSourceCanvas(jsonModel) {
@@ -176,9 +245,6 @@ function setupJoins(jsPlumbInstance, jsonModel){
     var obj = jsonModel;
 
     jQuery.each(obj, function(index, mapping) {
-      console.log(mapping.source);
-      console.log(mapping.target);
-
       jsPlumbInstance.connect({uuids:['join.' + mapping.source, 'join.' + mapping.target]});
     });        
 }
