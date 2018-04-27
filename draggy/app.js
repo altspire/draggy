@@ -51,8 +51,12 @@ function initializeAutoComplete() {
     var availableTags = [
       "SELECT",
       "FROM",
+      "INNER JOIN",
+      "OUTER JOIN",
+      "GROUP BY",
+      "HAVING",
       "WHERE",
-      "JOIN"
+      "BETWEEN"
     ];
 
     availableTags = availableTags.concat(SOURCE_MODEL_COLUMNS);
@@ -85,14 +89,14 @@ function initializeAutoComplete() {
           return false;
         },
         select: function( event, ui ) {
-          var terms = split( this.value );
-          // remove the current input
-          terms.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( " " );
+          var query = this.value;
+
+          var lastIndex = Math.max(query.lastIndexOf(" "),query.lastIndexOf("\n"));
+          query = query.substring(0, lastIndex+1);
+          query = query + ui.item.value + " ";
+
+          this.value = query;
+
           return false;
         }
       });
@@ -133,6 +137,7 @@ function getSourceColumns(jsonModel) {
     var columnArray = [];
 
     jQuery.each(obj, function(index, model) {
+          columnArray.push(model.id);
           jQuery.each(model.columns, function(index, column) {
             columnArray.push(model.id + '.' + column.id)
           });
