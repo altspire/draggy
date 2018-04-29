@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5311bfb7-5069-49fb-a621-e4aed7af5dff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/draggy.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/app.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/font-awesome.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/inner.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/jquery.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/jquery.validate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/jsplumb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draggy/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/font-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/font-awesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/inner.html" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/inner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/jquery.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/jquery.validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/jquery.validate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/jsplumb.js" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/jsplumb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/static/transform/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/transform/static/transform/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transform/templates/transform/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/transform/templates/transform/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,8 +26,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/transform/templates/transform/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="181" column="17" lean-forward="true" selection-start-line="181" selection-start-column="17" selection-end-line="181" selection-end-column="17" />
+            <state relative-caret-position="210">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
@@ -43,7 +44,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="65" />
     <option name="y" value="-4" />
     <option name="width" value="1855" />
@@ -206,8 +207,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/transform/templates/transform/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="181" column="17" lean-forward="true" selection-start-line="181" selection-start-column="17" selection-end-line="181" selection-end-column="17" />
+        <state relative-caret-position="210">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
